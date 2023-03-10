@@ -67,5 +67,5 @@ if __name__ == "__main__":
     global_data = {}
     conf_locations = get_subdomain_confs()
     for conf_location in conf_locations:
-        global_data['conf_location'] = parse_conf_configuration(conf_location)
+        global_data[conf_location] = parse_conf_configuration(conf_location)
     print(global_data)
