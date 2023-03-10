@@ -12,7 +12,7 @@ def get_subdomain_confs():
 
 def get_conf_contents(conf_file_path):
     with open(conf_file_path, "r") as f:
-        contents = f.readlines()
+        contents = f.read()
     return contents
 
 
