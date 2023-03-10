@@ -1,0 +1,1 @@
+# SWAG-Proxy-Confs-Scanner
