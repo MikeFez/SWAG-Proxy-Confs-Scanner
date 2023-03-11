@@ -75,7 +75,7 @@ def index():
     table_rows = ["<tr><th>Service</th><th>External Access</th><th>Location</th><th>Authelia</th></tr>"]
     for conf_loc, service_data in GLOBAL_DATA.items():
         for location, location_data in service_data["locations"].items():
-            table_rows.append(f'<tr><td>{service_data["subdomain"]}</td><td class="{str(service_data["external_access"])}">{service_data["external_access"]}</td><td>{location}</td><td class="{str(service_data["authelia"])}">{location_data["authelia"]}</td></tr>')
+            table_rows.append(f'<tr><td>{service_data["subdomain"]}</td><td>{location}</td><td class="{str(service_data["external_access"])}">{service_data["external_access"]}</td><td class="{str(service_data["authelia"])}">{location_data["authelia"]}</td></tr>')
     return render_template('index.html', table_rows=table_rows)
 
 if __name__ == "__main__":
