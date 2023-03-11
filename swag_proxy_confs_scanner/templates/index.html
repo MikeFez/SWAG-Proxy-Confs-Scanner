@@ -1,41 +1,90 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+         <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/extensions/filter-control/bootstrap-table-filter-control.css">
         <style>
-            table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            td, th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-            }
-
-            tr:nth-child(even) {
-                background-color: #dddddd;
-            }
-
             .False {
-                background: red;
+                background: #dc3545;
                 color: white;
             }
 
             .True {
-                background: green;
+                background: #28a745;
                 color: white;
             }
         </style>
     </head>
     <body>
+        <div class="container">
+                    <table id="table"
+                        data-toggle="table"
+                        data-filter-control="true"
+                        data-show-search-clear-button="true"
+                        data-sortable="true"
+                        classes="table-sm"
+                        data-pagination="true"
+                        data-show-columns="true"
+                        data-show-columns-toggle-all="true"
+                        class="table-responsive">
+                        <thead>
+                            <tr>
+                                <!--special characters and spaces not allowed in data-field name-->
+                                <th data-field="subdomain" data-filter-control="input" data-sortable="true">Subdomain</th>
+                                <th data-field="location" data-filter-control="input" data-sortable="true">Location</th>
+                                <th data-field="external_access" data-filter-control="select" data-sortable="true">External Access</th>
+                                <th data-field="location_authelia" data-filter-control="input" data-sortable="true">Authelia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in table_rows %}
+                            <tr>
+                                <!--special characters and spaces not allowed in data-field name-->
+                                <td>{{ row.subdomain }}</td>
+                                <td>{{ row.location }}</td>
+                                <td class="{{ row.external_access }}">{{ row.external_access }}</td>
+                                <td class="{{ row.location_authelia }}">{{ row.location_authelia }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+        <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
         <div>
-            <table>
-                {% for row in table_rows %}
-                    {{ row | safe }}
-                {% endfor %}
+            <table class="data-table">
             </table>
+            <script>
+                var tf = new TableFilter(document.querySelector('.data-table'), {
+                    base_path: '/tablefilter'
+                });
+                tf.init();
+            </script>
         </div>
     </body>
 </html>
