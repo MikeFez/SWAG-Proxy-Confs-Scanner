@@ -73,7 +73,6 @@ def get_cls(value):
 @app.route('/')
 def index():
     table_rows = []
-    ["<tr><th>Service</th><th>Location</th><th>External Access</th><th>Authelia</th></tr>"]
     for conf_loc, service_data in GLOBAL_DATA.items():
         for location, location_data in service_data["locations"].items():
             table_rows.append({
