@@ -1,9 +1,14 @@
 import glob
 import logging
 import re
+from threading import Thread
+from flask import Flask, render_template
+from time import sleep
 
-logging.basicConfig(level=logging.INFO)
-
+GLOBAL_DATA = {}
+app = Flask(__name__)
+WEKZEUG_LOG = logging.getLogger('werkzeug')
+WEKZEUG_LOG.disabled = True
 
 def get_subdomain_confs():
     path = r'/proxy-confs/*.subdomain.conf'
@@ -63,11 +68,35 @@ def parse_conf_configuration(conf_contents):
     return data
 
 
+def start_server():
+    """Starts the server"""
+    print("Starting server configuration")
+    thread = Thread(target=launch_flask, daemon=True)
+    thread.start()
+    print("Server configuration complete")
+    return
+
+
+def launch_flask():
+    """This function is executed in a thread, preventing Flask from blocking"""
+    print(f"Starting Flask @ http://localhost:8025")
+    app.run(host='0.0.0.0', port=8025)
+    return
+
+@app.route('/')
+def index():
+    table_rows = ["<tr><th>Service</th><th>External Access</th><th>Location</th><th>Authelia</th></tr>"]
+    for conf_loc, service_data in GLOBAL_DATA.items():
+        for location, location_data in service_data["locations"].items():
+            table_rows.append(f'<tr><td>{service_data["subdomain"]}</td><td>{service_data["external_access"]}</td><td>{location}</td><td>{location_data["authelia"]}</td></tr>')
+    return render_template('index.html', table_rows=table_rows)
 
 if __name__ == "__main__":
-    global_data = {}
     conf_locations = get_subdomain_confs()
     for conf_location in conf_locations:
         conf_contents = get_conf_contents(conf_location)
-        global_data[conf_location] = parse_conf_configuration(conf_contents)
-    print(global_data)
+        GLOBAL_DATA[conf_location] = parse_conf_configuration(conf_contents)
+    print(GLOBAL_DATA)
+    start_server()
+    while True:
+        sleep(60)
