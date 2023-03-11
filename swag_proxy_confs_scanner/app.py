@@ -26,7 +26,8 @@ def parse_conf_configuration(conf_contents):
     LOCATION_SEC_EXPR = r'\s* location\s(\S+)\s{([^}]*)}'
     SERVER_NAME_EXPR = r'^\s*server_name\s(\S+)\.\*;\s*$'
     AUTHELIA_SERVER_ENABLED_EXPR = r'^\s*include\s\/config\/nginx\/authelia-server\.conf;\s*$'
-    BLOCK_EXTERNAL_ACCESS_ENABLED_EXPR = r'^\s*allow\s([0-9]{1,3}\.){3}[0-9]{1,3}($|/(16|24));\s*$\s*deny\sall;\s*$'
+    BLOCK_EXTERNAL_ACCESS_ENABLED_EXPR = r'^\s*include\s\/config\/nginx\/deny-external-access\.conf;\s*$'
+    # BLOCK_EXTERNAL_ACCESS_ENABLED_EXPR = r'^\s*allow\s([0-9]{1,3}\.){3}[0-9]{1,3}($|/(16|24));\s*$\s*deny\sall;\s*$'
 
     # Location Portion
     AUTHELIA_LOCATION_ENABLED_EXPR = r'^\s*include\s\/config\/nginx\/authelia-location\.conf;\s*$'
