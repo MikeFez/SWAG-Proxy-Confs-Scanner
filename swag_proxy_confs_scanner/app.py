@@ -1,9 +1,7 @@
 import glob
 import logging
 import re
-from threading import Thread
 from flask import Flask, render_template
-from time import sleep
 
 GLOBAL_DATA = {}
 app = Flask(__name__)
@@ -67,22 +65,6 @@ def parse_conf_configuration(conf_contents):
         data["locations"][location_name] = location_data
     return data
 
-
-def start_server():
-    """Starts the server"""
-    print("Starting server configuration")
-    thread = Thread(target=launch_flask, daemon=True)
-    thread.start()
-    print("Server configuration complete")
-    return
-
-
-def launch_flask():
-    """This function is executed in a thread, preventing Flask from blocking"""
-    print(f"Starting Flask @ http://localhost:8025")
-    app.run(host='0.0.0.0', port=8025)
-    return
-
 @app.route('/')
 def index():
     table_rows = ["<tr><th>Service</th><th>External Access</th><th>Location</th><th>Authelia</th></tr>"]
@@ -97,6 +79,6 @@ if __name__ == "__main__":
         conf_contents = get_conf_contents(conf_location)
         GLOBAL_DATA[conf_location] = parse_conf_configuration(conf_contents)
     print(GLOBAL_DATA)
-    start_server()
-    while True:
-        sleep(60)
+
+    print(f"Starting Flask @ http://localhost:8025")
+    app.run(host='0.0.0.0', port=8025)
