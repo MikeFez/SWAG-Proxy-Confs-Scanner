@@ -79,7 +79,7 @@ def index():
                 "subdomain": service_data["subdomain"],
                 "location": location,
                 "external_access": "Enabled" if service_data["external_access"] else "Disabled",
-                "location_authelia": "Enabled" if service_data["authelia"] else "Disabled")
+                "location_authelia": "Enabled" if service_data["authelia"] else "Disabled"
             })
     return render_template('index.html', table_rows=table_rows)
 
